@@ -68,7 +68,8 @@ const dashBoard = (req, res) => {
   });
 };
 const postProject = async (req, res) => {
-  const { projectTitle, projectDescription } = req.body;
+  const { projectTitle, projectDescription, projectMembers, projectTickets } =
+    req.body;
   if (projectTitle && projectDescription) {
     const project = await Projects.create(req.body);
     return res.status(200).json({
@@ -78,9 +79,6 @@ const postProject = async (req, res) => {
   }
   if (!projectTitle) {
     throw new badRequest("project title is required");
-  }
-  if (!projectDescription) {
-    throw new badRequest("project description is required");
   }
 };
 const getProjects = async (req, res) => {
@@ -110,12 +108,22 @@ const getProject = async (req, res) => {
       throw new badRequest("bad request");
     });
 };
-const updateProject = (req, res) => {
+const updateProject = async (req, res) => {
   const { id } = req.params;
-  return res.json({
-    id: id,
-    data: req.body,
+  const project = await Projects.findOneAndUpdate({ _id: id }, req.body, {
+    new: true,
+    runValidators: true,
   });
+  if (!project) {
+    throw new badRequest("Project does not exist");
+  }
+  if (project) {
+    console.log(">>>PROJECT", project);
+    res.status(200).json({
+      message: "Updated",
+      data: project,
+    });
+  }
 };
 const addMember = (req, res) => {
   const { name, email, phone } = req.body;
@@ -133,11 +141,41 @@ const addMember = (req, res) => {
 };
 const getMembers = async (req, res) => {
   await Members.find({}).then((member) => {
+    if (!member) {
+      throw new badRequest("There are no members at the moment");
+    }
     return res.json({
       data: member,
     });
   });
 };
+const getProjectMembers = async (req, res) => {
+  const { id } = req.params;
+  const member = await Projects.findOne({ _id: id });
+  if (!member) {
+    throw new badRequest("NO MEMBERS AVAILABLE");
+  }
+  return res.status(200).json({
+    members: member.projectMembers,
+  });
+};
+const deleteProjectMembers = async (req, res) => {
+  const { id } = req.params;
+  const { key } = req.params;
+  if (!id && !key) {
+    throw new badRequest("Project not found");
+  }
+  await Projects.updateMany(
+    { _id: id },
+    { $pull: { projectMembers: { _id: key } } }
+  ).then(() => {
+    return res.status(200).json({
+      message: "Member deleted",
+    });
+  });
+};
+///-------------------------------------------------TICKETS-------
+
 module.exports = {
   getBug,
   signIn,
@@ -149,4 +187,6 @@ module.exports = {
   updateProject,
   addMember,
   getMembers,
+  getProjectMembers,
+  deleteProjectMembers,
 };

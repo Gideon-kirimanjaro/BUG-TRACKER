@@ -10,6 +10,8 @@ const {
   updateProject,
   addMember,
   getMembers,
+  getProjectMembers,
+  deleteProjectMembers,
 } = require("../controller/controller");
 const { authMiddle } = require("../middleware/auth");
 const router = express.Router();
@@ -21,7 +23,9 @@ router.get("/dashBoard", authMiddle, dashBoard);
 router.post("/projects", postProject);
 router.get("/projects", getProjects);
 router.get("/projects/:id", getProject);
-router.put("/project/:id", updateProject);
+router.patch("/project/:id", updateProject);
 router.post("/members", addMember);
 router.get("/members", getMembers);
+router.get("/projects/:id/members", getProjectMembers);
+router.delete("/projects/:id/members/:key", deleteProjectMembers);
 module.exports = { router };
