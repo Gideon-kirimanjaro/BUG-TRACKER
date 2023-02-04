@@ -12,6 +12,8 @@ const {
   getMembers,
   getProjectMembers,
   deleteProjectMembers,
+  updateTickets,
+  getTickets,
 } = require("../controller/controller");
 const { authMiddle } = require("../middleware/auth");
 const router = express.Router();
@@ -28,4 +30,7 @@ router.post("/members", addMember);
 router.get("/members", getMembers);
 router.get("/projects/:id/members", getProjectMembers);
 router.delete("/projects/:id/members/:key", deleteProjectMembers);
+router.patch("/projects/:id/tickets", updateTickets);
+router.get("/projects/:id/tickets", getTickets);
+
 module.exports = { router };

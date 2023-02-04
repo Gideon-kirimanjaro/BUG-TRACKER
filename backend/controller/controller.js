@@ -175,7 +175,40 @@ const deleteProjectMembers = async (req, res) => {
   });
 };
 ///-------------------------------------------------TICKETS-------
-
+const updateTickets = async (req, res) => {
+  const { title, description, time, type, priority, status } = req.body;
+  const { id } = req.params;
+  if (title && description && time && type && priority && status) {
+    const project = await Projects.findByIdAndUpdate(
+      { _id: id },
+      { $set: { projectTickets: [req.body] } },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!project) {
+      throw new badRequest("Project not found");
+    }
+    return res.json({
+      message: "success",
+      data: project,
+    });
+  } else {
+    return res.send("Fill all fields");
+  }
+};
+const getTickets = async (req, res) => {
+  const { id } = req.params;
+  const tickets = await Projects.findOne({ _id: id });
+  if (tickets) {
+    return res
+      .status(200)
+      .json({ message: "Success", tickets: tickets.projectTickets });
+  } else {
+    return res.send("No tickets at the moment");
+  }
+};
 module.exports = {
   getBug,
   signIn,
@@ -189,4 +222,6 @@ module.exports = {
   getMembers,
   getProjectMembers,
   deleteProjectMembers,
+  updateTickets,
+  getTickets,
 };
