@@ -1,0 +1,29 @@
+.form-box {
+  background-color: rgb(245, 245, 245);
+  padding: 30px;
+  border-radius: 20px;
+}
+.submit {
+  display: flex;
+  justify-content: center;
+}
+.links {
+  color: red;
+  text-decoration: none;
+  padding-top: 3px;
+  padding-left: 3px;
+}
+.loginForm {
+  font-family: nunnito;
+}
+.loginForm h2,
+p {
+  font-family: nunnito;
+  color: blue;
+  display: flex;
+  justify-content: center;
+}
+@font-face {
+  font-family: nunnito;
+  src: url("/public/fonts/nunito/Nunito-Medium.ttf");
+}
