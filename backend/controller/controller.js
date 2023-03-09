@@ -18,10 +18,7 @@ const signIn = (req, res) => {
         const id = user._id;
         const token = jwt.sign(
           { id: id, name: user.userName, email: user.email },
-          process.env.JWT_TOKEN,
-          {
-            expiresIn: "30d",
-          }
+          process.env.JWT_TOKEN
         );
         return res.json({
           message: "User Found",
@@ -209,6 +206,20 @@ const getTickets = async (req, res) => {
     return res.send("No tickets at the moment");
   }
 };
+const getTicket = async (req, res) => {
+  const { key, id } = req.params;
+
+  if (key) {
+    await Projects.find({ _id: id }).then((ticket) => {
+      return res.json({
+        msg: "success",
+        data: ticket,
+      });
+    });
+  } else {
+    res.send("There is an error");
+  }
+};
 module.exports = {
   getBug,
   signIn,
@@ -224,4 +235,5 @@ module.exports = {
   deleteProjectMembers,
   updateTickets,
   getTickets,
+  getTicket,
 };

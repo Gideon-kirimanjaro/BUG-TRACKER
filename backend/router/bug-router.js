@@ -14,12 +14,13 @@ const {
   deleteProjectMembers,
   updateTickets,
   getTickets,
+  getTicket,
 } = require("../controller/controller");
 const { authMiddle } = require("../middleware/auth");
 const router = express.Router();
 
 router.get("/", getBug);
-router.post("/signIn", signIn);
+router.post("/logIn", signIn);
 router.post("/register", register);
 router.get("/dashBoard", authMiddle, dashBoard);
 router.post("/projects", postProject);
@@ -32,5 +33,6 @@ router.get("/projects/:id/members", getProjectMembers);
 router.delete("/projects/:id/members/:key", deleteProjectMembers);
 router.patch("/projects/:id/tickets", updateTickets);
 router.get("/projects/:id/tickets", getTickets);
+router.get("/projects/:id/tickets/:key", getTicket);
 
 module.exports = { router };
