@@ -7,14 +7,15 @@ const AuthContext = createContext({
   token: "",
   formData: {},
   setFormData: "",
+  key: "",
+  setKey: "",
 });
 export default AuthContext;
 export const ContextProvider = (props) => {
   const [toggle, setToggle] = useState(true);
   const [token, setToken] = useState("");
   const [formData, setFormData] = useState({});
-
-  const [formErrors, setFormError] = useState("");
+  const [key, setKey] = useState(1);
 
   return (
     <AuthContext.Provider
@@ -25,6 +26,8 @@ export const ContextProvider = (props) => {
         setToken: setToken,
         formData: formData,
         setFormData: setFormData,
+        key: key,
+        setKey: setKey,
       }}
     >
       {props.children}

@@ -1,40 +1,36 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 // import axios from "axios";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Sidebar/Sidebar";
 import Feed from "./Feed/Feed";
-import Rightbar from "./Rightbar/Rightbar";
 import { Stack } from "@mui/system";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const DashBoard = () => {
-  // const ctx = useContext(AuthContext);
-  // const [loading, setLoading] = useState();
-  // const fetchData = useCallback(async () => {
-  //   setLoading(true);
-  //   try {
-  //     await axios
-  //       .get("http://localhost:4500/api/v1/dashBoard", {
-  //         headers: { Authorization: `Bearer ${ctx.formData.token}` },
-  //       })
-  //       .then((response) => response.data)
-  //       .then((data) => console.log(data));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setLoading(false);
-  // }, [ctx.formData.token]);
-  // useEffect(() => {
-  //   fetchData();
-  // }, [fetchData]);
-  // console.log(">>>>Data", ctx.formData.token);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    if (token) {
+      console.log("FUNCTION WORKS");
+      axios
+        .get("http://localhost:4500/api/v1/bugs/dashBoard", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((data) => {
+          setUserData(data.data);
+        });
+    } else {
+      navigate("/");
+    }
+  }, [navigate, token]);
   return (
     <Box>
-      <Navbar />
+      <Navbar userData={userData} />
       <Stack direction="row" spacing={2} justifyContent="space-between">
         <Sidebar />
         <Feed />
-        {/* <Rightbar /> */}
       </Stack>
     </Box>
   );

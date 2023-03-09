@@ -9,8 +9,9 @@ import { AvatarBox } from "../ui/AvatarBox";
 import { useState } from "react";
 import NavMenu from "../ui/NavMenu";
 
-const Navbar = () => {
+const Navbar = ({ userData }) => {
   const [open, setOpen] = useState(false);
+  const { data } = userData;
   const avatarHandler = (e) => {
     setOpen(!open);
   };
@@ -22,16 +23,13 @@ const Navbar = () => {
             display: { xs: "none", sm: "block" },
           }}
         >
-          Maca Admin
+          KAI CREATIVES TICKET SYSTEM
         </Typography>
         <Pets
           sx={{
             display: { xs: "block", sm: "none" },
           }}
         />
-        <Search>
-          <InputBase placeholder="search..." />
-        </Search>
         <Icons>
           <Badge
             badgeContent={4}
@@ -51,7 +49,7 @@ const Navbar = () => {
             {" "}
             <Avatar src="/av.jpg" />
             <NavMenu open={open} />
-            <Typography>John Doe</Typography>
+            <Typography>{data}</Typography>
           </AvatarBox>
         </Icons>{" "}
       </StyledToolBar>

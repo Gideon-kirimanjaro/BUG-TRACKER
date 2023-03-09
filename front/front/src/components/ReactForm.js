@@ -1,50 +1,9 @@
 import { Box } from "@mui/material";
-import axios from "axios";
-import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
-import AuthContext from "../Store/Auth";
 import "./Form.css";
-function ReactForm({
-  formData,
-  formToggle,
-  logIn,
-  registerHandler,
-  logInHandler,
-}) {
-  // const ctx = useContext(AuthContext);
-  // const emailHandler = (e) => {
-  //   setEmail(e.target.value);
-  // };
-  // const passwordHandler = (e) => {
-  //   setPassword(e.target.value);
-  // };
-  // const submitHandler = (e) => {
-  //   try {
-  //     axios
-  //       .post("http://localhost:4500/api/v1/login", {
-  //         email: email,
-  //         password: password,
-  //       })
-  //       .then((response) => response.data)
-  //       .then((data) => {
-  //         const { token } = data;
-  //         ctx.setToken(token);
-  //         ctx.setFormData(data);
-  //       })
-  //       .catch((error) => {
-  //         if (error.response) {
-  //           const { msg } = error.response.data;
-  //           setFormError(msg); // => the response payload
-  //         }
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  //   e.preventDefault();
-  // };
+function ReactForm({ formData, logIn, registerHandler, logInHandler, errors }) {
   return (
     <Box sx={{}}>
       <div
@@ -80,6 +39,7 @@ function ReactForm({
             </Form.Group>
           );
         })}
+        <p>{errors}</p>
 
         <div className="submit">
           {logIn ? (

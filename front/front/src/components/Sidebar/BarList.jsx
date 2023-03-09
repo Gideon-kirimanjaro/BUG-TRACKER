@@ -17,65 +17,55 @@ import { Button } from "@mui/material";
 import LightSwitch from "../ui/LightSwitch";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
+import { AdminPanelSettings, AirplaneTicket } from "@mui/icons-material";
+import AuthContext from "../../Store/Auth";
 export default function BarList() {
+  const ctx = React.useContext(AuthContext);
+
+  const listData = [
+    {
+      key: 1,
+      name: "DashBoard",
+      icon: <HouseIcon />,
+    },
+    {
+      key: 2,
+      name: "Tickets",
+      icon: <AirplaneTicket />,
+    },
+    {
+      key: 3,
+      name: "Administration",
+      icon: <AdminPanelSettings />,
+    },
+  ];
+  const listHandler = (key) => {
+    ctx.setKey(key);
+  };
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <nav aria-label="main mailbox folders">
         <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <HouseIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <AddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Add Post" />
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <VerifiedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Published" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <LocalOfferIcon />
-              </ListItemIcon>
-              <ListItemText primary="Tags" />
-            </ListItemButton>
-          </ListItem>
+          {" "}
+          {listData.map((data) => {
+            return (
+              <ListItem disablePadding key={data.key}>
+                <ListItemButton
+                  onClick={() => {
+                    listHandler(data.key);
+                  }}
+                >
+                  <ListItemIcon>{data.icon}</ListItemIcon>
+                  <ListItemText primary={data.name} />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
         </List>
       </nav>
       <Divider />
       <nav aria-label="secondary mailbox folders">
         <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <AnalyticsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Stats" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <PsychologyIcon />
-              </ListItemIcon>
-              <ListItemText primary="Faqs" />
-            </ListItemButton>
-          </ListItem>
           <ListItem disablePadding>
             <ListItemButton>
               <LightSwitch />

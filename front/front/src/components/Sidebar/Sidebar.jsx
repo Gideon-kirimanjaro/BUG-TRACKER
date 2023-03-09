@@ -11,7 +11,6 @@ const Sidebar = () => {
         display: { xs: "none", sm: "block" },
       }}
     >
-      {" "}
       <BarList />
     </Box>
   );
