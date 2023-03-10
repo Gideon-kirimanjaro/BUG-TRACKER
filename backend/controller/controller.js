@@ -220,6 +220,16 @@ const getTicket = async (req, res) => {
     res.send("There is an error");
   }
 };
+// const getUsers = async (req, res) => {
+//   try {
+//     const members = await Members.find({});
+//     return res.status(200).json({
+//       data: members,
+//     });
+//   } catch (error) {
+//     throw new notFound("No projects found");
+//   }
+// };
 module.exports = {
   getBug,
   signIn,

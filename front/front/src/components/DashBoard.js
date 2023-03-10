@@ -7,10 +7,13 @@ import Feed from "./Feed/Feed";
 import { Stack } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import AuthContext from "../Store/Auth";
 const DashBoard = () => {
   const navigate = useNavigate();
+  const ctx = useContext(AuthContext);
   const token = localStorage.getItem("token");
-  const [userData, setUserData] = useState({});
+
   useEffect(() => {
     if (token) {
       console.log("FUNCTION WORKS");
@@ -19,7 +22,7 @@ const DashBoard = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((data) => {
-          setUserData(data.data);
+          ctx.setUserData(data.data);
         });
     } else {
       navigate("/");
@@ -27,7 +30,7 @@ const DashBoard = () => {
   }, [navigate, token]);
   return (
     <Box>
-      <Navbar userData={userData} />
+      <Navbar userData={ctx.userData} />
       <Stack direction="row" spacing={2} justifyContent="space-between">
         <Sidebar />
         <Feed />

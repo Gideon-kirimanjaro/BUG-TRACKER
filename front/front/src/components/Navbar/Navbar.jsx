@@ -31,7 +31,7 @@ const Navbar = ({ userData }) => {
           }}
         />
         <Icons>
-          <Badge
+          {/* <Badge
             badgeContent={4}
             sx={{ marginRight: "5px", display: { xs: "none", md: "block" } }}
             color="error"
@@ -44,12 +44,19 @@ const Navbar = ({ userData }) => {
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <Notifications color="action" />
-          </Badge>
+          </Badge> */}
           <AvatarBox onClick={avatarHandler}>
             {" "}
-            <Avatar src="/av.jpg" />
-            <NavMenu open={open} />
-            <Typography>{data}</Typography>
+            {/* <Avatar src="/av.jpg" />
+            <NavMenu open={open} /> */}
+            <h4
+              style={{
+                color: "pink",
+                fontWeight: "bold",
+              }}
+            >
+              Logged In as {data}
+            </h4>
           </AvatarBox>
         </Icons>{" "}
       </StyledToolBar>

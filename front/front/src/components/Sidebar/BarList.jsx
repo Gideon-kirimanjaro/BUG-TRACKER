@@ -19,22 +19,28 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import { AdminPanelSettings, AirplaneTicket } from "@mui/icons-material";
 import AuthContext from "../../Store/Auth";
+import { useNavigate } from "react-router-dom";
 export default function BarList() {
   const ctx = React.useContext(AuthContext);
+  const navigate = useNavigate();
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
   const listData = [
     {
-      key: 1,
+      key: "/auth/dashboard",
       name: "DashBoard",
       icon: <HouseIcon />,
     },
     {
-      key: 2,
+      key: "/auth/dashboard/tickets",
       name: "Tickets",
       icon: <AirplaneTicket />,
     },
     {
-      key: 3,
+      key: "/auth/dashboard/admin",
       name: "Administration",
       icon: <AdminPanelSettings />,
     },
@@ -65,7 +71,7 @@ export default function BarList() {
       </nav>
       <Divider />
       <nav aria-label="secondary mailbox folders">
-        <List>
+        {/* <List>
           <ListItem disablePadding>
             <ListItemButton>
               <LightSwitch />
@@ -74,8 +80,10 @@ export default function BarList() {
               </ListItemIcon>
             </ListItemButton>
           </ListItem>
-        </List>
+        </List> */}
       </nav>
+
+      <Button onClick={logOut}>Log Out</Button>
     </Box>
   );
 }

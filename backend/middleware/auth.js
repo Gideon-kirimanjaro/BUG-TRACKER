@@ -7,7 +7,6 @@ const authMiddle = async (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(" ")[1];
     const data = jwt.verify(token, process.env.JWT_TOKEN);
-    console.log("DATA>>>>>>", data);
     req.user = data;
     next();
   } else {

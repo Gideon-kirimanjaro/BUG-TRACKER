@@ -26,12 +26,15 @@ const Login = () => {
         .then((response) => {
           //get token from response
           const token = response.data.token;
-          console.log("TOKEN", token);
-          //set JWT token to local
-          localStorage.setItem("token", token);
-          navigate("/auth/dashboard");
           const { data } = response;
-          setErrors(data.message);
+          console.log("TOKEN", response);
+          if (token) {
+            localStorage.setItem("token", token);
+            navigate("/auth/dashboard");
+          } else {
+            setErrors(data.message);
+          }
+          //set JWT token to local
         });
     } catch (error) {
       setErrors("There are errors in your form");
