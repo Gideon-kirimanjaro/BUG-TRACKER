@@ -1,20 +1,24 @@
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import CheckBox from "../CheckBox";
 
-function CustomInputs({ data }) {
+function CustomInputs({ formData, data, title, checkBoxHandler }) {
   return (
     <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>project title</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>project description</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
+      {formData.map((item) => {
+        return (
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <p>{item.title}</p>
+            <Form.Control
+              type="email"
+              placeholder={item.title}
+              value={item.value}
+              onChange={item.onChange}
+            />
+          </Form.Group>
+        );
+      })}
       <Form.Group className="mb-3" controlId="formBasicCheckbox"></Form.Group>
-      <CheckBox data={data} />
+      <CheckBox data={data} title={title} checkboxHandler={checkBoxHandler} />
     </Form>
   );
 }

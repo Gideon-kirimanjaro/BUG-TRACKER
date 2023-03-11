@@ -15,6 +15,12 @@ const AuthContext = createContext({
   setMembers: "setMembers",
   projectData: "",
   setProjectData: "",
+  projectTitle: "projectTitle",
+  setProjectTitle: "setProjectTitle",
+  projectDescription: "projectDescription",
+  setProjectDescription: "setProjectDescription",
+  checked: "",
+  setChecked: "",
 });
 export default AuthContext;
 export const ContextProvider = (props) => {
@@ -26,6 +32,9 @@ export const ContextProvider = (props) => {
   const [userData, setUserData] = useState({});
   const [members, setMembers] = useState([]);
   const [projectData, setProjectData] = useState([]);
+  const [projectTitle, setProjectTitle] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const [checked, setChecked] = useState([]);
 
   return (
     <AuthContext.Provider
@@ -46,6 +55,12 @@ export const ContextProvider = (props) => {
         setMembers: setMembers,
         projectData: projectData,
         setProjectData: setProjectData,
+        projectTitle: projectTitle,
+        setProjectTitle: setProjectTitle,
+        projectDescription: projectDescription,
+        setProjectDescription: setProjectDescription,
+        checked: checked,
+        setChecked: setChecked,
       }}
     >
       {props.children}
