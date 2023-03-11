@@ -11,6 +11,10 @@ const AuthContext = createContext({
   setKey: "",
   projectId: "",
   setProjectId: "",
+  members: "members",
+  setMembers: "setMembers",
+  projectData: "",
+  setProjectData: "",
 });
 export default AuthContext;
 export const ContextProvider = (props) => {
@@ -20,6 +24,8 @@ export const ContextProvider = (props) => {
   const [key, setKey] = useState("/auth/dashboard");
   const [projectId, setProjectId] = useState("");
   const [userData, setUserData] = useState({});
+  const [members, setMembers] = useState([]);
+  const [projectData, setProjectData] = useState([]);
 
   return (
     <AuthContext.Provider
@@ -36,6 +42,10 @@ export const ContextProvider = (props) => {
         setUserData: setUserData,
         projectId: projectId,
         setProjectId: setProjectId,
+        members: members,
+        setMembers: setMembers,
+        projectData: projectData,
+        setProjectData: setProjectData,
       }}
     >
       {props.children}
