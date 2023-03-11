@@ -1,7 +1,15 @@
 import React from "react";
-import { Button, StyledButton } from "../../../components/ui/StyledButton";
+import CustomModal from "../../../components/ui/CustomModal";
 
-const ProjectHeaders = ({ title, btnTitle, clickEvent }) => {
+const ProjectHeaders = ({
+  title,
+  btnTitle,
+  clickEvent,
+  show,
+  handleShow,
+  handleClose,
+  project,
+}) => {
   return (
     <div className="p-2">
       <div
@@ -11,9 +19,13 @@ const ProjectHeaders = ({ title, btnTitle, clickEvent }) => {
         className="d-flex justify-content-between "
       >
         <p>{title}</p>
-        <Button primary onClick={clickEvent}>
-          {btnTitle}
-        </Button>
+        <CustomModal
+          btnTitle={btnTitle}
+          show={show}
+          handleClose={handleClose}
+          handleShow={handleShow}
+          project={project}
+        />
       </div>
     </div>
   );
