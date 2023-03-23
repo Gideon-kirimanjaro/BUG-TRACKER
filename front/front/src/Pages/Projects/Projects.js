@@ -6,29 +6,11 @@ import ProjectHeaders from "./ProjectHeaders/ProjectHeaders";
 
 const Projects = () => {
   const ctx = useContext(AuthContext);
-  const fetchProjects = async () => {
-    await axios
-      .get("http://localhost:4500/api/v1/bugs/projects")
-      .then((response) => {
-        ctx.setProjectData(response.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const fetchMembers = async () => {
-    await axios
-      .get("http://localhost:4500/api/v1/bugs/members")
-      .then((response) => {
-        ctx.setMembers(response.data.data);
-        console.log(ctx.members);
-      });
-  };
-  useEffect(() => {
-    fetchProjects();
-    fetchMembers();
-  }, []);
   const [show, setShow] = useState(false);
+  const handleDefaultClose = () => {
+    setShow(false);
+  };
+
   const handleClose = async () => {
     if ((ctx.projectTitle !== "") & (ctx.projectDescription !== "")) {
       try {
@@ -38,36 +20,52 @@ const Projects = () => {
             projectDescription: ctx.projectDescription,
             projectMembers: ctx.checked,
           })
-          .then((response) => {
-            console.log("<<<<<>>>>>", response);
-          })
-          .then(setShow(false));
+
+          .then(
+            ctx.setModalErrors({
+              state: false,
+            })
+          )
+          .then(
+            ctx.setSuccessText({
+              successState: true,
+              successMessage: "Project added successfully",
+            })
+          )
+          .then(
+            ctx.setProjectTitle(""),
+            ctx.setProjectDescription(""),
+            ctx.setChecked([])
+          )
+          .then(ctx.setProjectId());
       } catch (error) {}
     } else {
-      alert("cannot post epmty fields");
-      setShow(false);
+      ctx.setModalErrors({
+        state: true,
+        message: "cannot post empty fields!",
+      });
     }
   };
   const handleShow = async () => {
     setShow(true);
+    ctx.setModalErrors({ state: false });
+    ctx.setSuccessText({ successState: false });
   };
-  console.log("<<<>>", ctx.checked);
-  const addProject = () => {};
+
   return (
     <div>
       <div className="card  ">
         <div className="card-body">
-          {" "}
           <ProjectHeaders
             title={"projects"}
             btnTitle={"Add Project"}
-            clickEvent={addProject}
             show={show}
             handleClose={handleClose}
             handleShow={handleShow}
             project={true}
+            defaultClose={handleDefaultClose}
           />
-          <Tables data={ctx.projectData} />
+          <Tables />
         </div>
       </div>
     </div>

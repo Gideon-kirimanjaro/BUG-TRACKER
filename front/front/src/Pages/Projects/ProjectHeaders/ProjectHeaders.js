@@ -9,6 +9,7 @@ const ProjectHeaders = ({
   handleShow,
   handleClose,
   project,
+  defaultClose,
 }) => {
   return (
     <div className="p-2">
@@ -25,6 +26,7 @@ const ProjectHeaders = ({
           handleClose={handleClose}
           handleShow={handleShow}
           project={project}
+          defaultClose={defaultClose}
         />
       </div>
     </div>

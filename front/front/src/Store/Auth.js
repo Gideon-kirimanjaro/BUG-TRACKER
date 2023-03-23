@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import axios from "axios";
+import React, { createContext, useCallback, useMemo, useState } from "react";
 
 const AuthContext = createContext({
   toggle: true,
@@ -21,6 +22,13 @@ const AuthContext = createContext({
   setProjectDescription: "setProjectDescription",
   checked: "",
   setChecked: "",
+  modalErrors: "",
+  setModalErrors: "",
+  successText: "",
+  setSuccessText: "",
+  fetchProjects: "",
+  loader: "",
+  setLoader: "",
 });
 export default AuthContext;
 export const ContextProvider = (props) => {
@@ -35,7 +43,52 @@ export const ContextProvider = (props) => {
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [checked, setChecked] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [modalErrors, setModalErrors] = useState({
+    state: false,
+    message: "",
+  });
+  const [successText, setSuccessText] = useState({
+    successState: false,
+    successMessage: "",
+  });
+  const newData = useMemo(() => projectData, [projectData]);
+  const newMembers = useMemo(() => members, [members]);
+  const fetchProjects = useCallback(async () => {
+    setLoader(true);
+    await axios
+      .get("http://localhost:4500/api/v1/bugs/projects")
+      .then((response) => {
+        setProjectData(response.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setLoader(false);
+  }, [newData]);
+  const fetchMembers = useCallback(async () => {
+    await axios
+      .get("http://localhost:4500/api/v1/bugs/members")
+      .then((response) => {
+        setMembers(response.data.data);
+        console.log(newMembers);
+      });
+  }, [newMembers]);
+  React.useEffect(() => {
+    // toast.promise(fetchProjects(), {
+    //   pending: "Fetching projects",
+    //   success: "Projects  Loaded",
+    //   error: "error",
+    // });
+    // toast.promise(fetchMembers(), {
+    //   pending: "Fetching Members",
+    //   success: "Members  Loaded",
+    //   error: "error",
+    // });
 
+    fetchProjects();
+    fetchMembers();
+  }, [projectId]);
   return (
     <AuthContext.Provider
       value={{
@@ -61,6 +114,13 @@ export const ContextProvider = (props) => {
         setProjectDescription: setProjectDescription,
         checked: checked,
         setChecked: setChecked,
+        modalErrors: modalErrors,
+        setModalErrors: setModalErrors,
+        successText: successText,
+        setSuccessText: setSuccessText,
+        fetchProjects: fetchProjects,
+        loader: loader,
+        setLoader: setLoader,
       }}
     >
       {props.children}

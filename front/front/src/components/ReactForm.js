@@ -58,7 +58,7 @@ function ReactForm({ formData, logIn, registerHandler, logInHandler, errors }) {
       {logIn ? (
         <p>
           Not registered, click{" "}
-          <Link className="links" to="/auth/register">
+          <Link className="links" to="/signUp">
             Here
           </Link>
         </p>

@@ -1,14 +1,16 @@
 import { Email, Password } from "@mui/icons-material";
 import axios, { Axios } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactForm from "../../components/ReactForm";
+import AuthContext from "../../Store/Auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
+
   const emailHandler = (e) => {
     setEmail(e.target.value);
   };
@@ -27,10 +29,8 @@ const Login = () => {
           //get token from response
           const token = response.data.token;
           const { data } = response;
-          console.log("TOKEN", response);
           if (token) {
             localStorage.setItem("token", token);
-            navigate("/auth/dashboard");
           } else {
             setErrors(data.message);
           }
@@ -40,12 +40,8 @@ const Login = () => {
       setErrors("There are errors in your form");
     }
   };
-  // useEffect(() => {
-  //   logIn();
-  // }, []);
-  const logInHandler = (e) => {
+  const logInHandler = async (e) => {
     e.preventDefault();
-
     logIn();
   };
 

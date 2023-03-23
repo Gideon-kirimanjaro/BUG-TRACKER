@@ -15,6 +15,7 @@ const {
   updateTickets,
   getTickets,
   getTicket,
+  deleteProject,
 } = require("../controller/controller");
 const { authMiddle } = require("../middleware/auth");
 const router = express.Router();
@@ -34,5 +35,6 @@ router.delete("/projects/:id/members/:key", deleteProjectMembers);
 router.patch("/projects/:id/tickets", updateTickets);
 router.get("/projects/:id/tickets", getTickets);
 router.get("/projects/:id/tickets/:key", getTicket);
+router.delete("/projects/:id", deleteProject);
 
 module.exports = { router };

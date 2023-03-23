@@ -11,6 +11,10 @@ import AuthContext from "../../Store/Auth";
 import Tickets from "../Tickets/Tickets";
 import Administration from "../Administration/Administration";
 import ProjectPage from "../ProjectPage/ProjectPage";
+import AppRoutes from "../AppRoutes/AppRoutes";
+import FeedRoutes from "../AppRoutes/FeedRoutes";
+import TicketsPage from "../../Pages/TicketsPage/TicketsPage";
+import Admin from "../../Pages/Admin/Admin";
 
 export default function OutlinedCard() {
   const ctx = React.useContext(AuthContext);
@@ -19,10 +23,7 @@ export default function OutlinedCard() {
     <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined">
         <CardContent>
-          {ctx.key === "/auth/dashboard" && <Projects />}
-          {ctx.key === "/auth/dashboard/tickets" && <Tickets />}
-          {ctx.key === "/auth/dashboard/admin" && <Administration />}
-          {ctx.key === ctx.projectId && <ProjectPage />}
+          <FeedRoutes />
         </CardContent>
       </Card>
     </Box>

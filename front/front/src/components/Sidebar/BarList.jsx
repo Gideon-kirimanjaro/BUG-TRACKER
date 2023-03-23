@@ -21,11 +21,9 @@ import { AdminPanelSettings, AirplaneTicket } from "@mui/icons-material";
 import AuthContext from "../../Store/Auth";
 import { useNavigate } from "react-router-dom";
 export default function BarList() {
-  const ctx = React.useContext(AuthContext);
   const navigate = useNavigate();
   const logOut = () => {
     localStorage.clear();
-    navigate("/");
   };
 
   const listData = [
@@ -35,18 +33,19 @@ export default function BarList() {
       icon: <HouseIcon />,
     },
     {
-      key: "/auth/dashboard/tickets",
+      key: "/auth/tickets",
       name: "Tickets",
       icon: <AirplaneTicket />,
     },
     {
-      key: "/auth/dashboard/admin",
+      key: "/auth/admin",
       name: "Administration",
       icon: <AdminPanelSettings />,
     },
   ];
   const listHandler = (key) => {
-    ctx.setKey(key);
+    // ctx.setKey(key);
+    navigate(key);
   };
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -70,19 +69,7 @@ export default function BarList() {
         </List>
       </nav>
       <Divider />
-      <nav aria-label="secondary mailbox folders">
-        {/* <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <LightSwitch />
-              <ListItemIcon>
-                <DarkModeIcon />
-              </ListItemIcon>
-            </ListItemButton>
-          </ListItem>
-        </List> */}
-      </nav>
-
+      <nav aria-label="secondary mailbox folders"></nav>
       <Button onClick={logOut}>Log Out</Button>
     </Box>
   );

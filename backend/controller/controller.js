@@ -105,6 +105,20 @@ const getProject = async (req, res) => {
       throw new badRequest("bad request");
     });
 };
+const deleteProject = async (req, res) => {
+  const { id } = req.params;
+  await Projects.deleteOne({ _id: id }).then((project) => {
+    if (project) {
+      res.json({
+        msg: "project deleted",
+      });
+    } else {
+      res.json({
+        message: "Project not found",
+      });
+    }
+  });
+};
 const updateProject = async (req, res) => {
   const { id } = req.params;
   const project = await Projects.findOneAndUpdate({ _id: id }, req.body, {
@@ -246,4 +260,5 @@ module.exports = {
   updateTickets,
   getTickets,
   getTicket,
+  deleteProject,
 };
