@@ -1,6 +1,6 @@
 import { Notifications, Pets } from "@mui/icons-material";
 import { AppBar, Avatar, Badge, InputBase, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Icons } from "../ui/Icons";
 import { Search } from "../ui/Search";
 import { StyledToolBar } from "../ui/StyledToolBar";
@@ -8,13 +8,34 @@ import MailIcon from "@mui/icons-material/Mail";
 import { AvatarBox } from "../ui/AvatarBox";
 import { useState } from "react";
 import NavMenu from "../ui/NavMenu";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Navbar = ({ userData }) => {
+const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const { data } = userData;
+
   const avatarHandler = (e) => {
     setOpen(!open);
   };
+  const [data, setData] = useState("");
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      axios
+        .get("http://localhost:4500/api/v1/bugs/dashBoard", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((data) => {
+          setData(data.data);
+        });
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <AppBar position="stick">
       <StyledToolBar>
@@ -55,7 +76,7 @@ const Navbar = ({ userData }) => {
                 fontWeight: "bold",
               }}
             >
-              Logged In as {data}
+              Logged In as {data.data}
             </h4>
           </AvatarBox>
         </Icons>{" "}

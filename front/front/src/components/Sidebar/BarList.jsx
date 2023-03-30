@@ -14,16 +14,13 @@ import PsychologyIcon from "@mui/icons-material/Psychology";
 import HouseIcon from "@mui/icons-material/House";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
-import LightSwitch from "../ui/LightSwitch";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
 import { AdminPanelSettings, AirplaneTicket } from "@mui/icons-material";
-import AuthContext from "../../Store/Auth";
 import { useNavigate } from "react-router-dom";
 export default function BarList() {
   const navigate = useNavigate();
   const logOut = () => {
     localStorage.clear();
+    navigate("/");
   };
 
   const listData = [
@@ -33,12 +30,12 @@ export default function BarList() {
       icon: <HouseIcon />,
     },
     {
-      key: "/auth/tickets",
+      key: "/auth/dashboard/tickets",
       name: "Tickets",
       icon: <AirplaneTicket />,
     },
     {
-      key: "/auth/admin",
+      key: "/auth/dashboard/admin",
       name: "Administration",
       icon: <AdminPanelSettings />,
     },

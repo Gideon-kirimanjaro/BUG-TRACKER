@@ -1,10 +1,13 @@
 import React from "react";
-import Tickets from "../../components/Tickets/Tickets";
 
 const TicketsPage = () => {
   return (
     <div>
-      <Tickets />
+      <div className="card  ">
+        <div className="card-body">
+          <h1>Tickets are here</h1>
+        </div>
+      </div>
     </div>
   );
 };
